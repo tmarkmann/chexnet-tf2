@@ -13,6 +13,8 @@ class CXR14Dataset():
             split=['train', 'test'],
             shuffle_files=True,
             as_supervised=True,
+            download=config["dataset"]["download"],
+            data_dir=config["dataset"]["data_dir"],
             with_info=True,
         )
         self.ds_info = info
@@ -40,3 +42,6 @@ class CXR14Dataset():
         width = self.config['data']['image_width']
         image = tf.image.resize(image, [height, width])
         return tf.cast(image, tf.float32) / 255., label
+
+    def benchmark(self):
+        tfds.benchmark(self.ds_train, batch_size=self.config['train']['batch_size'])

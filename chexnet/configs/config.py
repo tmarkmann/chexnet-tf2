@@ -2,6 +2,10 @@
 """Model config in json format"""
 
 chexnet_config = {
+    "dataset": {
+        "download": False,
+        "data_dir": "~/tensorflow_datasets",
+    },
     "data": {
         "class_names": ["Atelectasis","Cardiomegaly","Effusion","Infiltration","Mass","Nodule","Pneumonia","Pneumothorax","Consolidation","Edema","Emphysema","Fibrosis","Pleural_Thickening","Hernia"],
         "image_dimension": (224, 224, 3),
