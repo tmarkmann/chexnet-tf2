@@ -12,17 +12,12 @@ input_shape = (None,
 
 dataset = CXR14Dataset(chexnet_config)
 model = CheXNet(chexnet_config).model()
-
 model.compile(
     optimizer=tf.keras.optimizers.Adam(0.001),
     loss=tf.keras.losses.BinaryCrossentropy(from_logits=False),
     metrics=[tf.keras.metrics.AUC(curve='ROC',multi_label=True, num_labels=14, from_logits=False)],
 )
+model.load_weights('/home/tmarkmann/chexnet-tf2/chexnet/weights/chexnet_tf1_weights.h5')
 
-model.summary()
-
-model.fit(
-    dataset.ds_train,
-    epochs=6,
-    validation_data=dataset.ds_test,
-)
+#print(dataset.ds_info)
+model.evaluate(dataset.ds_test)
