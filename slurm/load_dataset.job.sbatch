@@ -3,5 +3,7 @@
 #SBATCH --partition=gpu
 #SBATCH --time=2:00:00
 #SBATCH --output=/media/compute/homes/tmarkmann/load_dataset.out
+#SBATCH --mail-user=tmarkmann@techfak.uni-bielefeld.de
+#SBATCH --mail-type=END
 
 srun load_dataset.job.sh
