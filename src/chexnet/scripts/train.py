@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 
 import tensorflow as tf
-from chexnet.dataloader.cxr14_dataset import CXR14Dataset
-from chexnet.model.chexnet import CheXNet
-from chexnet.configs.config import chexnet_config
+from src.chexnet.dataloader.cxr14_dataset import CXR14Dataset
+from src.chexnet.model.chexnet import CheXNet
+from src.chexnet.configs.config import chexnet_config
 
 input_shape = (None,
     chexnet_config['data']['image_height'],
