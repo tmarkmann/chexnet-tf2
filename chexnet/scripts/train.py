@@ -14,15 +14,15 @@ dataset = CXR14Dataset(chexnet_config)
 model = CheXNet(chexnet_config).model()
 
 model.compile(
-    optimizer=tf.keras.optimizers.Adam(0.001),
+    optimizer=tf.keras.optimizers.Adam(chexnet_config["train"]["learn_rate"]),
     loss=tf.keras.losses.BinaryCrossentropy(from_logits=False),
-    metrics=[tf.keras.metrics.AUC(curve='ROC',multi_label=True, num_labels=14, from_logits=False)],
+    metrics=[tf.keras.metrics.AUC(curve='ROC',multi_label=True, num_labels=len(chexnet_config["data"]["class_names"]), from_logits=False)],
 )
 
 model.summary()
 
 model.fit(
     dataset.ds_train,
-    epochs=6,
+    epochs=chexnet_config["train"]["epochs"],
     validation_data=dataset.ds_test,
 )
