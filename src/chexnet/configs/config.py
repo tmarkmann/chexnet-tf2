@@ -14,12 +14,12 @@ chexnet_config = {
         "image_channel": 3,
     },
     "train": {
-        "batch_size": 32,
+        "batch_size": 64,
         "learn_rate": 0.001,
-        "epochs": 1,
+        "epochs": 20,
     },
     "test": {
-        "batch_size": 32,
+        "batch_size": 64,
     },
     "model": {
         "weigths": "../../data/CheXNet_Keras_0.3.0_weights.h5",
