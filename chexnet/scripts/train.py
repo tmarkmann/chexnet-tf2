@@ -29,9 +29,14 @@ model.compile(
     metrics=[metric_auc, metric_bin_accuracy, metric_accuracy],
 )
 
-# Tensorboard Callback
+# Tensorboard Callback and config logging
 log_dir = 'logs/chexnet/'+ datetime.now().strftime("%Y-%m-%d--%H.%M")
 tensorboard_callback = tf.keras.callbacks.TensorBoard(log_dir=log_dir, histogram_freq=1)
+
+config_matrix = [[k, str(w)] for k, w in chexnet_config["train"].items()]
+file_writer = tf.summary.create_file_writer(log_dir)
+with file_writer.as_default():
+  tf.summary.text("config", tf.convert_to_tensor(config_matrix), step=0)
 
 # Checkpoint Callback to only save best checkpoint
 checkpoint_filepath = 'checkpoint/chexnet/'
