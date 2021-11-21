@@ -4,12 +4,6 @@
 # external
 import tensorflow as tf
 
-
-# TODO
-# - class_weights
-# - maybe switch to sequential
-
-
 class CheXNet(tf.keras.Model):
     """CheXNet Model Class"""
 

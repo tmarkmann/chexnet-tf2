@@ -65,6 +65,6 @@ dyn_lr = tf.keras.callbacks.ReduceLROnPlateau(
 model.fit(
     dataset.ds_train,
     epochs=chexnet_config["train"]["epochs"],
-    validation_data=dataset.ds_test,
+    validation_data=dataset.ds_val,
     callbacks=[tensorboard_callback, checkpoint_callback, early_stopping, dyn_lr]
 )
