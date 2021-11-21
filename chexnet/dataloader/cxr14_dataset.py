@@ -18,7 +18,7 @@ class CXR14Dataset():
             with_info=True,
         )
         self.ds_info = info
-        self.class_weights = info.metadata.class_weights
+        self.class_weights = info.metadata["class_weights"]
 
         self.ds_train = self._build_train_pipeline(train)
         self.ds_val = self._build_test_pipeline(validation)
@@ -46,7 +46,7 @@ class CXR14Dataset():
         image = tf.image.resize(image, [height, width])
         return tf.cast(image, tf.float32) / 255., label
     
-    def augment_data(image, label):
+    def augment_data(self, image, label):
         image = tf.image.random_flip_left_right(image)
         return image, label
 
