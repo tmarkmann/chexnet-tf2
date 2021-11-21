@@ -15,6 +15,7 @@ chexnet_config = {
     },
     "train": {
         "train_base": True,
+        "augmentation": True,
         "batch_size": 64,
         "learn_rate": 0.001,
         "epochs": 100,

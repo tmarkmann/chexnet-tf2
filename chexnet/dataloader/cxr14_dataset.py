@@ -28,7 +28,8 @@ class CXR14Dataset():
         ds = ds.map(self.preprocess, num_parallel_calls=tf.data.AUTOTUNE)
         ds = ds.shuffle(self.ds_info.splits['train'].num_examples)
         ds = ds.batch(self.config['train']['batch_size'])
-        ds = ds.map(self.augment_data, num_parallel_calls=tf.data.AUTOTUNE)
+        if self.config["train"]["augmentation"]:
+            ds = ds.map(self.augment_data, num_parallel_calls=tf.data.AUTOTUNE)
         ds = ds.prefetch(tf.data.AUTOTUNE)
         return ds
 
