@@ -18,7 +18,7 @@ class CXR14Dataset():
             with_info=True,
         )
         self.ds_info = info
-        self.class_weights = info.class_weights
+        self.class_weights = info.metadata.class_weights
 
         self.ds_train = self._build_train_pipeline(train)
         self.ds_val = self._build_test_pipeline(validation)
