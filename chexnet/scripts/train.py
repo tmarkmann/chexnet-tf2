@@ -62,6 +62,12 @@ dyn_lr = tf.keras.callbacks.ReduceLROnPlateau(
     min_lr=chexnet_config['train']['min_learning_rate'],
 )
 
+# Class weights for training underrepresented classes
+class_weights = None
+if chexnet_config["train"]["use_class_weights"]:
+    class_weights = dataset.class_weights
+
+# Model Training
 model.fit(
     dataset.ds_train,
     epochs=chexnet_config["train"]["epochs"],
