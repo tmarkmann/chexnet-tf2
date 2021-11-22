@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import tensorflow as tf
+import tensorflow_addons as tfa
 from datetime import datetime
 from chexnet.dataloader.cxr14_dataset import CXR14Dataset
 from chexnet.model.chexnet import CheXNet
@@ -21,7 +22,8 @@ optimizer = tf.keras.optimizers.Adam(chexnet_config["train"]["learn_rate"])
 loss = tf.keras.losses.BinaryCrossentropy(from_logits=False)
 metric_auc = tf.keras.metrics.AUC(curve='ROC',multi_label=True, num_labels=len(chexnet_config["data"]["class_names"]), from_logits=False)
 metric_bin_accuracy= tf.keras.metrics.BinaryAccuracy()
-metric_accuracy= tf.keras.metrics.Accuracy()
+metric_accuracy = tf.keras.metrics.Accuracy()
+metric_f1 = tfa.metrics.F1Score(num_classes=len(chexnet_config["data"]["class_names"]))
 
 model.compile(
     optimizer=optimizer,
@@ -39,7 +41,7 @@ with file_writer.as_default():
   tf.summary.text("config", tf.convert_to_tensor(config_matrix), step=0)
 
 # Checkpoint Callback to only save best checkpoint
-checkpoint_filepath = 'checkpoint/chexnet/' + datetime.now().strftime("%Y-%m-%d--%H.%M")
+checkpoint_filepath = 'checkpoint/chexnet/' + datetime.now().strftime("%Y-%m-%d--%H.%M") + '/cp.ckpt'
 checkpoint_callback = tf.keras.callbacks.ModelCheckpoint(
     filepath=checkpoint_filepath,
     save_weights_only=True,
@@ -74,3 +76,10 @@ model.fit(
     validation_data=dataset.ds_val,
     callbacks=[tensorboard_callback, checkpoint_callback, early_stopping, dyn_lr]
 )
+
+#Model Test
+model.load_weights(checkpoint_filepath)
+model.evaluate(
+    dataset.ds_test, 
+    batch_size=chexnet_config['test']['batch_size'],
+    callbacks=[tensorboard_callback])

@@ -14,3 +14,4 @@ dependencies:
   - pandas
   - pip:
     - https://github.com/tmarkmann/tfds-cxr14/archive/refs/heads/main.zip
+    - tensorflow-addons[tensorflow]
