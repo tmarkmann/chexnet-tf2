@@ -23,12 +23,12 @@ loss = tf.keras.losses.BinaryCrossentropy(from_logits=False)
 metric_auc = tf.keras.metrics.AUC(curve='ROC',multi_label=True, num_labels=len(chexnet_config["data"]["class_names"]), from_logits=False)
 metric_bin_accuracy= tf.keras.metrics.BinaryAccuracy()
 metric_accuracy = tf.keras.metrics.Accuracy()
-metric_f1 = tfa.metrics.F1Score(num_classes=len(chexnet_config["data"]["class_names"]))
+metric_f1 = tfa.metrics.F1Score(num_classes=len(chexnet_config["data"]["class_names"]), threshold=chexnet_config["test"]["F1_threshold"])
 
 model.compile(
     optimizer=optimizer,
     loss=loss,
-    metrics=[metric_auc, metric_bin_accuracy, metric_accuracy],
+    metrics=[metric_auc, metric_bin_accuracy, metric_accuracy, metric_f1],
 )
 
 # Tensorboard Callback and config logging
@@ -78,7 +78,7 @@ model.fit(
 )
 
 #Model Test
-model.load_weights(checkpoint_filepath)
+model.load_weights(checkpoint_filepath) #best
 model.evaluate(
     dataset.ds_test, 
     batch_size=chexnet_config['test']['batch_size'],

@@ -25,10 +25,12 @@ chexnet_config = {
         "early_stopping_patience": 8
     },
     "test": {
+        "weights_path": "",
         "batch_size": 64,
+        "weights": "",
+        "F1_threshold": 0.5,
     },
     "model": {
-        "weigths": "../../data/CheXNet_Keras_0.3.0_weights.h5",
         "pooling": "avg",
     }
 }
