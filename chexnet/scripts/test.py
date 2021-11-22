@@ -31,8 +31,8 @@ model.compile(
 log_dir = 'logs/chexnet/' + datetime.now().strftime("evaluation--%Y-%m-%d--%H.%M")
 tensorboard_callback = tf.keras.callbacks.TensorBoard(log_dir=log_dir, histogram_freq=1)
 
-model.load_weights()
+model.load_weights(chexnet_config['test']['weights_path'])
 model.evaluate(
-    dataset.ds_testchexnet_config['test']['weights_path'], 
+    dataset.ds_test, 
     batch_size=chexnet_config['test']['batch_size'],
     callbacks=[tensorboard_callback])

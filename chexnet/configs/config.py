@@ -25,9 +25,8 @@ chexnet_config = {
         "early_stopping_patience": 8
     },
     "test": {
-        "weights_path": "",
+        "weights_path": "checkpoint/chexnet/best/cp.ckpt",
         "batch_size": 64,
-        "weights": "",
         "F1_threshold": 0.5,
     },
     "model": {
