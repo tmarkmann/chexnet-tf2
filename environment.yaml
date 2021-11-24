@@ -14,4 +14,5 @@ dependencies:
   - pandas
   - pip:
     - https://github.com/tmarkmann/tfds-cxr14/archive/refs/heads/main.zip
+    - https://github.com/dimitrymindlin/tfds-kaggle-chest-xray-images/archive/refs/heads/master.zip
     - tensorflow-addons[tensorflow]
