@@ -23,7 +23,7 @@ loss = tf.keras.losses.BinaryCrossentropy(from_logits=False)
 metric_auc = tf.keras.metrics.AUC(curve='ROC',multi_label=True, num_labels=len(chexnet_config["data"]["class_names"]), from_logits=False)
 metric_bin_accuracy= tf.keras.metrics.BinaryAccuracy()
 metric_accuracy = tf.keras.metrics.Accuracy()
-metric_f1 = tfa.metrics.F1Score(num_classes=len(chexnet_config["data"]["class_names"]), threshold=chexnet_config["test"]["F1_threshold"])
+metric_f1 = tfa.metrics.F1Score(num_classes=len(chexnet_config["data"]["class_names"]), threshold=chexnet_config["test"]["F1_threshold"], average='macro')
 
 model.compile(
     optimizer=optimizer,
