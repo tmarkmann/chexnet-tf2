@@ -71,3 +71,10 @@ model.fit(
     validation_data=dataset.ds_val,
     callbacks=[tensorboard_callback, checkpoint_callback, early_stopping, dyn_lr]
 )
+
+#Model Test
+model.load_weights(checkpoint_filepath) #best
+model.evaluate(
+    dataset.ds_test, 
+    batch_size=kaggle_config['test']['batch_size'],
+    callbacks=[tensorboard_callback])
