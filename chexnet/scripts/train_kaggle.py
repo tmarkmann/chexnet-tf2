@@ -82,5 +82,6 @@ result = model.evaluate(
 
 result = dict(zip(model.metrics_names, result))
 print(result)
+result_matrix = [[k, str(w)] for k, w in result.items()]
 with file_writer.as_default():
-  tf.summary.text("evaluation", tf.convert_to_tensor(result), step=0)
+  tf.summary.text("evaluation", tf.convert_to_tensor(result_matrix), step=0)
