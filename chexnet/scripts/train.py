@@ -79,7 +79,13 @@ model.fit(
 
 #Model Test
 model.load_weights(checkpoint_filepath) #best
-model.evaluate(
+result = model.evaluate(
     dataset.ds_test, 
     batch_size=chexnet_config['test']['batch_size'],
     callbacks=[tensorboard_callback])
+
+result = dict(zip(model.metrics_names, result))
+print(result)
+result_matrix = [[k, str(w)] for k, w in result.items()]
+with file_writer.as_default():
+  tf.summary.text("evaluation", tf.convert_to_tensor(result_matrix), step=0)
