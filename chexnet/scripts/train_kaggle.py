@@ -6,6 +6,7 @@ from datetime import datetime
 from chexnet.dataloader.kaggleXRay import KaggleXRayDataset
 from chexnet.model.chexnet import CheXNet
 from chexnet.configs.kaggle_config import kaggle_config
+from chexnet.configs.config import chexnet_config
 
 input_shape = (None,
     kaggle_config['data']['image_height'],
@@ -16,8 +17,13 @@ input_shape = (None,
 dataset = KaggleXRayDataset(kaggle_config)
 
 # Model Definition
-train_base = kaggle_config['train']['train_base']
-model = CheXNet(kaggle_config, train_base=train_base).model()
+chexnet = CheXNet(chexnet_config, train_base=chexnet_config['train']['train_base']).model()
+if chexnet_config['train']['chexnet_weights']:
+    chexnet.load_weights("../input/chexnet-weights/chexnet_weights/cp.ckpt")
+
+x = tf.keras.layers.Flatten()(chexnet.layers[-2].output)
+x = tf.keras.layers.Dense(1, activation='sigmoid')(x)
+model = tf.keras.Model(inputs=chexnet.layers[0].input, outputs=x)
 
 optimizer = tf.keras.optimizers.Adam(kaggle_config["train"]["learn_rate"])
 loss = tf.keras.losses.BinaryCrossentropy(from_logits=False)
