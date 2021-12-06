@@ -22,6 +22,7 @@ class KaggleXRayDataset():
         self.ds_train = self._build_train_pipeline(train)
         self.ds_val = self._build_test_pipeline(validation)
         self.ds_test = self._build_test_pipeline(test)
+        self.test = test
 
     def _build_train_pipeline(self, ds):
         ds = ds.map(self.preprocess, num_parallel_calls=tf.data.AUTOTUNE)

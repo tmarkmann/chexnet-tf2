@@ -18,8 +18,8 @@ dataset = KaggleXRayDataset(kaggle_config)
 
 # Model Definition
 chexnet = CheXNet(chexnet_config, train_base=chexnet_config['train']['train_base']).model()
-if chexnet_config['train']['chexnet_weights']:
-    chexnet.load_weights("../input/chexnet-weights/chexnet_weights/cp.ckpt")
+if kaggle_config['train']['use_chexnet_weights']:
+    chexnet.load_weights("checkpoint/chexnet/best/cp.ckpt")
 
 x = tf.keras.layers.Flatten()(chexnet.layers[-2].output)
 x = tf.keras.layers.Dense(1, activation='sigmoid')(x)
@@ -47,7 +47,8 @@ with file_writer.as_default():
   tf.summary.text("config", tf.convert_to_tensor(config_matrix), step=0)
 
 # Checkpoint Callback to only save best checkpoint
-checkpoint_filepath = 'checkpoint/kaggle/' + datetime.now().strftime("%Y-%m-%d--%H.%M") + '/cp.ckpt'
+checkpoint_dir = 'checkpoint/kaggle/' + datetime.now().strftime("%Y-%m-%d--%H.%M") + '/'
+checkpoint_filepath = checkpoint_dir + 'cp.ckpt'
 checkpoint_callback = tf.keras.callbacks.ModelCheckpoint(
     filepath=checkpoint_filepath,
     save_weights_only=True,
@@ -91,3 +92,6 @@ print(result)
 result_matrix = [[k, str(w)] for k, w in result.items()]
 with file_writer.as_default():
   tf.summary.text("evaluation", tf.convert_to_tensor(result_matrix), step=0)
+
+#Save whole model
+model.save(checkpoint_dir + 'model')

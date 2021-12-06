@@ -6,6 +6,7 @@ dependencies:
   - tensorflow
   - tensorflow-datasets=4.4.0
   - tensorflow-gpu
+  - py-opencv
   - jupyterlab
   - ipywidgets
   - ipykernel
@@ -16,3 +17,5 @@ dependencies:
     - https://github.com/tmarkmann/tfds-cxr14/archive/refs/heads/main.zip
     - https://github.com/dimitrymindlin/tfds-kaggle-chest-xray-images/archive/refs/heads/master.zip
     - tensorflow-addons[tensorflow]
+    - tf-explain
+    - lime

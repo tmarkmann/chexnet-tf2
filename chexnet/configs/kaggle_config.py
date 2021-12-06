@@ -14,7 +14,8 @@ kaggle_config = {
         "image_channel": 3,
     },
     "train": {
-        "train_base": True,
+        "train_base": False,
+        "use_chexnet_weights": True,
         "augmentation": True,
         "batch_size": 64,
         "learn_rate": 0.001,
