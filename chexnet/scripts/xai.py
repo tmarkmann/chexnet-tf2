@@ -17,7 +17,6 @@ from chexnet.xai.utils import image_stack
 from tf_explain.core.grad_cam import GradCAM
 from lime import lime_image
 from chexnet.xai.keras import make_heatmap, save_heatmap
-from keras_explain.lrp import LRP
 
 #Create output dirs
 dirs = [

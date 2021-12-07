@@ -6,13 +6,19 @@ from datetime import datetime
 from chexnet.dataloader.kaggleXRay import KaggleXRayDataset
 from chexnet.model.chexnet import CheXNet
 from chexnet.configs.kaggle_config import kaggle_config
+import sys
 
-input_shape = (None,
-    kaggle_config['data']['image_height'],
-    kaggle_config['data']['image_width'],
-    kaggle_config['data']['image_channel'])
+# set cli arguments
+for arg in sys.argv:
+    if arg == "--train-base":
+        kaggle_config["train"]["train_base"] = True
+    elif arg == "--use_chexnet_weights":
+        kaggle_config["train"]["use_chexnet_weights"] = True
+    elif arg == "--augmentation":
+        kaggle_config["train"]["augmentation"] = True
 
 
+# Dataset
 dataset = KaggleXRayDataset(kaggle_config)
 
 # Model Definition
