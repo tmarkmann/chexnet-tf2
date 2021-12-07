@@ -17,6 +17,7 @@ from chexnet.xai.utils import image_stack
 from tf_explain.core.grad_cam import GradCAM
 from lime import lime_image
 from chexnet.xai.keras import make_heatmap, save_heatmap
+from keras_explain.lrp import LRP
 
 #Create output dirs
 dirs = [
@@ -33,7 +34,7 @@ for dir in dirs:
 
 # Data
 dataset = KaggleXRayDataset(kaggle_config)
-data = dataset.test.take(150)
+data = dataset.test.take(200)
 
 # Model Definition and weights
 metric_f1 = tfa.metrics.F1Score(num_classes=len(kaggle_config["data"]["class_names"]), threshold=kaggle_config["test"]["F1_threshold"], average='macro')

@@ -6,7 +6,6 @@ from datetime import datetime
 from chexnet.dataloader.kaggleXRay import KaggleXRayDataset
 from chexnet.model.chexnet import CheXNet
 from chexnet.configs.kaggle_config import kaggle_config
-from chexnet.configs.config import chexnet_config
 
 input_shape = (None,
     kaggle_config['data']['image_height'],
@@ -17,7 +16,7 @@ input_shape = (None,
 dataset = KaggleXRayDataset(kaggle_config)
 
 # Model Definition
-chexnet = CheXNet(chexnet_config, train_base=chexnet_config['train']['train_base']).model()
+chexnet = CheXNet(kaggle_config, train_base=kaggle_config['train']['train_base']).model()
 if kaggle_config['train']['use_chexnet_weights']:
     chexnet.load_weights("checkpoint/chexnet/best/cp.ckpt")
 
@@ -52,7 +51,7 @@ checkpoint_filepath = checkpoint_dir + 'cp.ckpt'
 checkpoint_callback = tf.keras.callbacks.ModelCheckpoint(
     filepath=checkpoint_filepath,
     save_weights_only=True,
-    monitor=metric_auc.name,
+    monitor="val_loss",
     mode='max',
     save_best_only=True)
 

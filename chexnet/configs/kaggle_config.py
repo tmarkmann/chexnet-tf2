@@ -15,8 +15,8 @@ kaggle_config = {
     },
     "train": {
         "train_base": False,
-        "use_chexnet_weights": True,
-        "augmentation": True,
+        "use_chexnet_weights": False,
+        "augmentation": False,
         "batch_size": 64,
         "learn_rate": 0.001,
         "epochs": 100,
