@@ -6,6 +6,7 @@ from datetime import datetime
 from chexnet.dataloader.kaggleXRay import KaggleXRayDataset
 from chexnet.model.chexnet import CheXNet
 from chexnet.configs.kaggle_config import kaggle_config
+from chexnet.configs.config import chexnet_config
 import sys
 
 # set cli arguments
@@ -17,12 +18,13 @@ for arg in sys.argv:
     elif arg == "--augmentation":
         kaggle_config["train"]["augmentation"] = True
 
+chexnet_config["train"] = kaggle_config["train"]
 
 # Dataset
 dataset = KaggleXRayDataset(kaggle_config)
 
 # Model Definition
-chexnet = CheXNet(kaggle_config, train_base=kaggle_config['train']['train_base']).model()
+chexnet = CheXNet(chexnet_config, train_base=chexnet_config['train']['train_base']).model()
 if kaggle_config['train']['use_chexnet_weights']:
     chexnet.load_weights("checkpoint/chexnet/best/cp.ckpt")
 
